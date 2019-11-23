@@ -37,12 +37,6 @@
             </div>
 {{--            @csrf--}}
             {{csrf_field()}}
-            {{--        错误信息--}}
-            @if(count($errors)>0)
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            @endif
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                 <div class="formControls col-xs-8">
@@ -51,8 +45,10 @@
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                    <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
+{{--                    <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">--}}
+                    <input class="input-text size-L" type="text" placeholder="验证码"   value="" name="captcha" style="width:150px;">
+
+                    <img src="{{captcha_src()}}"  id="capimg"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
@@ -67,6 +63,7 @@
                     <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
                 </div>
             </div>
+            @include('admin/public/msg');
         </form>
     </div>
 </div>
@@ -82,6 +79,11 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
+</script>
+<script>
+    $('#kanbuq').click(function(){
+        $('#capimg').attr('src',this.src='{{captcha_src()}}'+Math.random());
+    })
 </script>
 <!--/此乃百度统计代码，请自行删除
 </body>
